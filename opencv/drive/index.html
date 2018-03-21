@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        p {
+            height: 1px;
+        }
+
+        span {
+            display: inline-block;
+            height: 1px;
+            width: 1px;
+        }
+    </style>
+    <div id="demo">
+        <p v-for="ss in screen">
+            <span v-for="s in ss" :style="{'backgroundColor':`rgb(${s})`}">&nbsp;</span>
+        </p>
+    </div>
+    <script src="js/vue.js"></script>
+    <script src="js/axios.js"></script>
+    <script>
+        new Vue({
+            el: "#demo",
+            data: {
+                screen: []
+            },
+            methods: {},
+            mounted() {
+                console.log(axios)
+                axios.get('./screen.json')
+                    .then(function (response) {
+                        console.log(response);
+                        this.screen = response.data.content;
+                        console.log(this)
+                    }.bind(this))
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
+        })
+    </script>
+</body>
+</html>

@@ -3,9 +3,9 @@ import cv2
 import numpy as np
 from json import dumps
 # 图片路径
-IMAGE_NAME = "img/test.jpg"
+IMAGE_NAME = "./img/screen.png"
 # 保存为的json文件
-JSON_NAME = 'opencv_temp.json'
+JSON_NAME = 'screen.json'
 img = cv2.imread(IMAGE_NAME)
 
 # numpy中ndarray文件转为list
