@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask,url_for
 app = Flask(__name__)
 
 @app.route('/')
@@ -14,6 +14,12 @@ def show_user_profile(username):
     # show the user profile for that user
     return 'User %s' % username
 
-# 确保服务器只会在该脚本被 Python 解释器直接执行的时候才会运行
+# static file
+with app.test_request_context():
+    print url_for('index')
+    print url_for('login')
+    print url_for('login', next='/')
+    print url_for('profile', username='John Doe')
+
 if __name__ == '__main__':
     app.run()
