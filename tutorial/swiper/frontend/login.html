@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, maximum-scale=1, minimum-scale=1, initial-scale=1, user-scalable=no, shrink-to-fit=no">
+  <title>Login</title>
+
+  <link rel="stylesheet" href="./css/pure-min.css">
+
+  <style>
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      background-color: wheat;
+    }
+    h1 {
+      font-size: 400%;
+      margin-bottom: 0;
+      font-family: 'Ink Free', 'Comic Sans MS', Arial, sans-serif;
+    }
+    .icon {
+      padding-top: 50px;
+      padding-bottom: 50px;
+    }
+    #login_app {
+      padding-top: 50px;
+      text-align: center;
+    }
+    #login_app input {
+      margin: 0 auto;
+    }
+    #weibo {
+      margin-top: 0.7em;
+    }
+  </style>
+  <script src="./js/vue.js"></script>
+  <script src="./js/axios.min.js"></script>
+  <script src="./js/qs.js"></script>
+  <script src="./js/init.js"></script>
+</head>
+
+<body>
+  <div id="login_app">
+    <h1>Swiper</h1>
+
+    <div class="icon"><img src="./img/icon.png"></div>
+
+    <div class="pure-form">
+      <fieldset class="pure-group">
+          <input class="pure-input-2-3" placeholder="请输入手机号"
+            v-model="phone"
+          >
+      </fieldset>
+
+      <fieldset class="pure-group">
+          <input class="pure-input-2-3" placeholder="请输入验证码"
+            v-model="code"
+            v-show="seen"
+          >
+      </fieldset>
+
+      <button class="pure-button pure-input-2-3 pure-button-primary"
+        v-on:click="normal_login()"
+      >{{ btn_text }}</button>
+
+      <a id="weibo" type="submit" class="pure-button pure-input-2-3 pure-button-primary">
+          使用微博账号登录
+      </a>
+    </div>
+  </div>
+
+  <script>
+    app = new Vue(
+      {
+        el: '#login_app',
+        data: {
+          phone: '',
+          code: '',
+          seen: false,
+          btn_text: '发送验证码'
+        },
+
+        methods: {
+          // 获取验证码
+          get_verify_code: function() {
+            request.get('/api/user/verify',
+                      {
+                        params: {phone: this.phone}
+                      })
+            this.seen=true
+            this.btn_text = "登陆"
+          },
+
+          // 登陆
+          login: function() {
+            request.post('/api/user/login',
+                       {
+                         phone: this.phone,
+                         code: this.code
+                       })
+                  .then(function(response) {
+                    axios.defaults.headers['Cookies'] = response.headers['Set-Cookies']
+                  })
+            },
+
+          // 按钮事件
+          normal_login: function() {
+            if (this.seen === false) {
+              this.get_verify_code()
+            } else {
+              this.login()
+            }
+          },
+
+          // TODO: 微博登录
+          weibo_login: function() {}
+        }
+      }
+    )
+  </script>
+</body>
+
+</html>
