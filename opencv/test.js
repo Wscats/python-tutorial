@@ -1,3 +1,5 @@
+'use strict';
+
 const cv = require('opencv');
 cv.readImage('./test.jpg', function (err, img) {
     if (err) {

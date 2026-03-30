@@ -11,7 +11,7 @@
 })(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
-/******/ 	var installedModules = {};
+/******/ 	const installedModules = {};
 /******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
@@ -21,7 +21,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 			return installedModules[moduleId].exports;
 /******/
 /******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
+/******/ 		const module = installedModules[moduleId] = {
 /******/ 			exports: {},
 /******/ 			id: moduleId,
 /******/ 			loaded: false
@@ -63,10 +63,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 	
-	var utils = __webpack_require__(2);
-	var bind = __webpack_require__(3);
-	var Axios = __webpack_require__(5);
-	var defaults = __webpack_require__(6);
+	let utils = __webpack_require__(2);
+	let bind = __webpack_require__(3);
+	let Axios = __webpack_require__(5);
+	let defaults = __webpack_require__(6);
 	
 	/**
 	 * Create an instance of Axios
@@ -75,8 +75,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {Axios} A new instance of Axios
 	 */
 	function createInstance(defaultConfig) {
-	  var context = new Axios(defaultConfig);
-	  var instance = bind(Axios.prototype.request, context);
+	  const context = new Axios(defaultConfig);
+	  const instance = bind(Axios.prototype.request, context);
 	
 	  // Copy axios.prototype to instance
 	  utils.extend(instance, Axios.prototype, context);
@@ -88,7 +88,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 	
 	// Create the default instance to be exported
-	var axios = createInstance(defaults);
+	const axios = createInstance(defaults);
 	
 	// Expose Axios class to allow class inheritance
 	axios.Axios = Axios;
@@ -121,14 +121,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 	
-	var bind = __webpack_require__(3);
-	var isBuffer = __webpack_require__(4);
+	const bind = __webpack_require__(3);
+	const isBuffer = __webpack_require__(4);
 	
 	/*global toString:true*/
 	
 	// utils is a library of generic helper functions non-specific to axios
 	
-	var toString = Object.prototype.toString;
+	let toString = Object.prototype.toString;
 	
 	/**
 	 * Determine if a value is an Array
@@ -335,7 +335,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  if (isArray(obj)) {
 	    // Iterate over array values
-	    for (var i = 0, l = obj.length; i < l; i++) {
+	    for (let i = 0, l = obj.length; i < l; i++) {
 	      fn.call(null, obj[i], i, obj);
 	    }
 	  } else {
@@ -358,7 +358,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Example:
 	 *
 	 * ```js
-	 * var result = merge({foo: 123}, {foo: 456});
+	 * let result = merge({foo: 123}, {foo: 456});
 	 * console.log(result.foo); // outputs 456
 	 * ```
 	 *
@@ -366,7 +366,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @returns {Object} Result of all merge properties
 	 */
 	function merge(/* obj1, obj2, obj3, ... */) {
-	  var result = {};
+	  const result = {};
 	  function assignValue(val, key) {
 	    if (typeof result[key] === 'object' && typeof val === 'object') {
 	      result[key] = merge(result[key], val);
@@ -375,7 +375,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }
 	
-	  for (var i = 0, l = arguments.length; i < l; i++) {
+	  for (let i = 0, l = arguments.length; i < l; i++) {
 	    forEach(arguments[i], assignValue);
 	  }
 	  return result;
@@ -432,8 +432,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	module.exports = function bind(fn, thisArg) {
 	  return function wrap() {
-	    var args = new Array(arguments.length);
-	    for (var i = 0; i < args.length; i++) {
+	    let args = new Array(arguments.length);
+	    for (let i = 0; i < args.length; i++) {
 	      args[i] = arguments[i];
 	    }
 	    return fn.apply(thisArg, args);
@@ -455,7 +455,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	// The _isBuffer check is for Safari 5-7 support, because it's missing
 	// Object.prototype.constructor. Remove this eventually
 	module.exports = function (obj) {
-	  return obj != null && (isBuffer(obj) || isSlowBuffer(obj) || !!obj._isBuffer)
+	  return obj !== null && (isBuffer(obj) || isSlowBuffer(obj) || !!obj._isBuffer)
 	}
 	
 	function isBuffer (obj) {
@@ -474,10 +474,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 	
-	var defaults = __webpack_require__(6);
-	var utils = __webpack_require__(2);
-	var InterceptorManager = __webpack_require__(17);
-	var dispatchRequest = __webpack_require__(18);
+	let defaults = __webpack_require__(6);
+	let utils = __webpack_require__(2);
+	const InterceptorManager = __webpack_require__(17);
+	const dispatchRequest = __webpack_require__(18);
 	
 	/**
 	 * Create a new instance of Axios
@@ -510,8 +510,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  config.method = config.method.toLowerCase();
 	
 	  // Hook up interceptors middleware
-	  var chain = [dispatchRequest, undefined];
-	  var promise = Promise.resolve(config);
+	  const chain = [dispatchRequest, undefined];
+	  let promise = Promise.resolve(config);
 	
 	  this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor) {
 	    chain.unshift(interceptor.fulfilled, interceptor.rejected);
@@ -559,10 +559,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 	
-	var utils = __webpack_require__(2);
-	var normalizeHeaderName = __webpack_require__(7);
+	let utils = __webpack_require__(2);
+	const normalizeHeaderName = __webpack_require__(7);
 	
-	var DEFAULT_CONTENT_TYPE = {
+	const DEFAULT_CONTENT_TYPE = {
 	  'Content-Type': 'application/x-www-form-urlencoded'
 	};
 	
@@ -584,7 +584,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return adapter;
 	}
 	
-	var defaults = {
+	let defaults = {
 	  adapter: getDefaultAdapter(),
 	
 	  transformRequest: [function transformRequest(data, headers) {
@@ -661,7 +661,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 	
-	var utils = __webpack_require__(2);
+	let utils = __webpack_require__(2);
 	
 	module.exports = function normalizeHeaderName(headers, normalizedName) {
 	  utils.forEach(headers, function processHeader(value, name) {
@@ -679,26 +679,26 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 	
-	var utils = __webpack_require__(2);
-	var settle = __webpack_require__(9);
-	var buildURL = __webpack_require__(12);
-	var parseHeaders = __webpack_require__(13);
-	var isURLSameOrigin = __webpack_require__(14);
-	var createError = __webpack_require__(10);
-	var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(15);
+	let utils = __webpack_require__(2);
+	const settle = __webpack_require__(9);
+	const buildURL = __webpack_require__(12);
+	const parseHeaders = __webpack_require__(13);
+	const isURLSameOrigin = __webpack_require__(14);
+	let createError = __webpack_require__(10);
+	const btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(15);
 	
 	module.exports = function xhrAdapter(config) {
 	  return new Promise(function dispatchXhrRequest(resolve, reject) {
-	    var requestData = config.data;
-	    var requestHeaders = config.headers;
+	    let requestData = config.data;
+	    const requestHeaders = config.headers;
 	
 	    if (utils.isFormData(requestData)) {
 	      delete requestHeaders['Content-Type']; // Let the browser set it
 	    }
 	
-	    var request = new XMLHttpRequest();
-	    var loadEvent = 'onreadystatechange';
-	    var xDomain = false;
+	    let request = new XMLHttpRequest();
+	    let loadEvent = 'onreadystatechange';
+	    let xDomain = false;
 	
 	    // For IE 8/9 CORS support
 	    // Only supports POST and GET calls and doesn't returns the response headers.
@@ -716,8 +716,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    // HTTP basic authentication
 	    if (config.auth) {
-	      var username = config.auth.username || '';
-	      var password = config.auth.password || '';
+	      const username = config.auth.username || '';
+	      const password = config.auth.password || '';
 	      requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
 	    }
 	
@@ -741,9 +741,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	
 	      // Prepare the response
-	      var responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
-	      var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
-	      var response = {
+	      const responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
+	      const responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
+	      let response = {
 	        data: responseData,
 	        // IE sends 1223 instead of 204 (https://github.com/axios/axios/issues/201)
 	        status: request.status === 1223 ? 204 : request.status,
@@ -782,10 +782,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    // This is only done if running in a standard browser environment.
 	    // Specifically not if we're in a web worker, or react-native.
 	    if (utils.isStandardBrowserEnv()) {
-	      var cookies = __webpack_require__(16);
+	      const cookies = __webpack_require__(16);
 	
 	      // Add xsrf header
-	      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
+	      const xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
 	          cookies.read(config.xsrfCookieName) :
 	          undefined;
 	
@@ -865,7 +865,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 	
-	var createError = __webpack_require__(10);
+	const createError = __webpack_require__(10);
 	
 	/**
 	 * Resolve or reject a Promise based on response status.
@@ -875,7 +875,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param {object} response The response.
 	 */
 	module.exports = function settle(resolve, reject, response) {
-	  var validateStatus = response.config.validateStatus;
+	  const validateStatus = response.config.validateStatus;
 	  // Note: status is not exposed by XDomainRequest
 	  if (!response.status || !validateStatus || validateStatus(response.status)) {
 	    resolve(response);
@@ -897,7 +897,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 	
-	var enhanceError = __webpack_require__(11);
+	const enhanceError = __webpack_require__(11);
 	
 	/**
 	 * Create an Error with the specified message, config, error code, request and response.
@@ -910,7 +910,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @returns {Error} The created error.
 	 */
 	module.exports = function createError(message, config, code, request, response) {
-	  var error = new Error(message);
+	  const error = new Error(message);
 	  return enhanceError(error, config, code, request, response);
 	};
 
@@ -948,7 +948,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 	
-	var utils = __webpack_require__(2);
+	let utils = __webpack_require__(2);
 	
 	function encode(val) {
 	  return encodeURIComponent(val).
@@ -980,7 +980,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  } else if (utils.isURLSearchParams(params)) {
 	    serializedParams = params.toString();
 	  } else {
-	    var parts = [];
+	    const parts = [];
 	
 	    utils.forEach(params, function serialize(val, key) {
 	      if (val === null || typeof val === 'undefined') {
@@ -1020,11 +1020,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 	
-	var utils = __webpack_require__(2);
+	let utils = __webpack_require__(2);
 	
 	// Headers whose duplicates are ignored by node
 	// c.f. https://nodejs.org/api/http.html#http_message_headers
-	var ignoreDuplicateOf = [
+	const ignoreDuplicateOf = [
 	  'age', 'authorization', 'content-length', 'content-type', 'etag',
 	  'expires', 'from', 'host', 'if-modified-since', 'if-unmodified-since',
 	  'last-modified', 'location', 'max-forwards', 'proxy-authorization',
@@ -1045,7 +1045,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @returns {Object} Headers parsed into an object
 	 */
 	module.exports = function parseHeaders(headers) {
-	  var parsed = {};
+	  let parsed = {};
 	  var key;
 	  var val;
 	  var i;
@@ -1079,7 +1079,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 	
-	var utils = __webpack_require__(2);
+	let utils = __webpack_require__(2);
 	
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -1087,8 +1087,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  // Standard browser envs have full support of the APIs needed to test
 	  // whether the request URL is of the same origin as current location.
 	  (function standardBrowserEnv() {
-	    var msie = /(msie|trident)/i.test(navigator.userAgent);
-	    var urlParsingNode = document.createElement('a');
+	    const msie = /(msie|trident)/i.test(navigator.userAgent);
+	    const urlParsingNode = document.createElement('a');
 	    var originURL;
 	
 	    /**
@@ -1098,7 +1098,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    * @returns {Object}
 	    */
 	    function resolveURL(url) {
-	      var href = url;
+	      let href = url;
 	
 	      if (msie) {
 	        // IE needs attribute set twice to normalize properties
@@ -1132,7 +1132,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    * @returns {boolean} True if URL shares the same origin, otherwise false
 	    */
 	    return function isURLSameOrigin(requestURL) {
-	      var parsed = (utils.isString(requestURL)) ? resolveURL(requestURL) : requestURL;
+	      const parsed = (utils.isString(requestURL)) ? resolveURL(requestURL) : requestURL;
 	      return (parsed.protocol === originURL.protocol &&
 	            parsed.host === originURL.host);
 	    };
@@ -1155,7 +1155,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	// btoa polyfill for IE<10 courtesy https://github.com/davidchambers/Base64.js
 	
-	var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+	const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
 	
 	function E() {
 	  this.message = 'String contains an invalid character';
@@ -1165,8 +1165,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	E.prototype.name = 'InvalidCharacterError';
 	
 	function btoa(input) {
-	  var str = String(input);
-	  var output = '';
+	  const str = String(input);
+	  const output = '';
 	  for (
 	    // initialize result and counter
 	    var block, charCode, idx = 0, map = chars;
@@ -1195,7 +1195,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 	
-	var utils = __webpack_require__(2);
+	let utils = __webpack_require__(2);
 	
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -1204,7 +1204,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  (function standardBrowserEnv() {
 	    return {
 	      write: function write(name, value, expires, path, domain, secure) {
-	        var cookie = [];
+	        let cookie = [];
 	        cookie.push(name + '=' + encodeURIComponent(value));
 	
 	        if (utils.isNumber(expires)) {
@@ -1227,7 +1227,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      },
 	
 	      read: function read(name) {
-	        var match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
+	        const match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
 	        return (match ? decodeURIComponent(match[3]) : null);
 	      },
 	
@@ -1254,7 +1254,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 	
-	var utils = __webpack_require__(2);
+	let utils = __webpack_require__(2);
 	
 	function InterceptorManager() {
 	  this.handlers = [];
@@ -1312,12 +1312,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 	
-	var utils = __webpack_require__(2);
-	var transformData = __webpack_require__(19);
-	var isCancel = __webpack_require__(20);
-	var defaults = __webpack_require__(6);
-	var isAbsoluteURL = __webpack_require__(21);
-	var combineURLs = __webpack_require__(22);
+	let utils = __webpack_require__(2);
+	const transformData = __webpack_require__(19);
+	const isCancel = __webpack_require__(20);
+	const defaults = __webpack_require__(6);
+	const isAbsoluteURL = __webpack_require__(21);
+	const combineURLs = __webpack_require__(22);
 	
 	/**
 	 * Throws a `Cancel` if cancellation has been requested.
@@ -1366,7 +1366,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  );
 	
-	  var adapter = config.adapter || defaults.adapter;
+	  const adapter = config.adapter || defaults.adapter;
 	
 	  return adapter(config).then(function onAdapterResolution(response) {
 	    throwIfCancellationRequested(config);
@@ -1404,7 +1404,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 	
-	var utils = __webpack_require__(2);
+	const utils = __webpack_require__(2);
 	
 	/**
 	 * Transform the data for a request or a response
@@ -1506,7 +1506,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 	
-	var Cancel = __webpack_require__(23);
+	const Cancel = __webpack_require__(23);
 	
 	/**
 	 * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -1524,7 +1524,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    resolvePromise = resolve;
 	  });
 	
-	  var token = this;
+	  let token = this;
 	  executor(function cancel(message) {
 	    if (token.reason) {
 	      // Cancellation has already been requested
@@ -1551,7 +1551,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	CancelToken.source = function source() {
 	  var cancel;
-	  var token = new CancelToken(function executor(c) {
+	  const token = new CancelToken(function executor(c) {
 	    cancel = c;
 	  });
 	  return {
@@ -1576,7 +1576,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 *  ```js
 	 *  function f(x, y, z) {}
-	 *  var args = [1, 2, 3];
+	 *  const args = [1, 2, 3];
 	 *  f.apply(null, args);
 	 *  ```
 	 *

@@ -1,8 +1,8 @@
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.Qs = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.Qs = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){let c="function"===typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);const a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}const p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){const n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(const u="function"===typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 'use strict';
 
-var replace = String.prototype.replace;
-var percentTwenties = /%20/g;
+const replace = String.prototype.replace;
+const percentTwenties = /%20/g;
 
 module.exports = {
     'default': 'RFC3986',
@@ -21,9 +21,9 @@ module.exports = {
 },{}],2:[function(require,module,exports){
 'use strict';
 
-var stringify = require('./stringify');
-var parse = require('./parse');
-var formats = require('./formats');
+let stringify = require('./stringify');
+const parse = require('./parse');
+let formats = require('./formats');
 
 module.exports = {
     formats: formats,
@@ -34,11 +34,11 @@ module.exports = {
 },{"./formats":1,"./parse":3,"./stringify":4}],3:[function(require,module,exports){
 'use strict';
 
-var utils = require('./utils');
+let utils = require('./utils');
 
-var has = Object.prototype.hasOwnProperty;
+let has = Object.prototype.hasOwnProperty;
 
-var defaults = {
+let defaults = {
     allowDots: false,
     allowPrototypes: false,
     arrayLimit: 20,
@@ -50,17 +50,17 @@ var defaults = {
     strictNullHandling: false
 };
 
-var parseValues = function parseQueryStringValues(str, options) {
-    var obj = {};
-    var cleanStr = options.ignoreQueryPrefix ? str.replace(/^\?/, '') : str;
-    var limit = options.parameterLimit === Infinity ? undefined : options.parameterLimit;
-    var parts = cleanStr.split(options.delimiter, limit);
+const parseValues = function parseQueryStringValues(str, options) {
+    let obj = {};
+    const cleanStr = options.ignoreQueryPrefix ? str.replace(/^\?/, '') : str;
+    const limit = options.parameterLimit === Infinity ? undefined : options.parameterLimit;
+    const parts = cleanStr.split(options.delimiter, limit);
 
-    for (var i = 0; i < parts.length; ++i) {
-        var part = parts[i];
+    for (let i = 0; i < parts.length; ++i) {
+        const part = parts[i];
 
-        var bracketEqualsPos = part.indexOf(']=');
-        var pos = bracketEqualsPos === -1 ? part.indexOf('=') : bracketEqualsPos + 1;
+        const bracketEqualsPos = part.indexOf(']=');
+        const pos = bracketEqualsPos === -1 ? part.indexOf('=') : bracketEqualsPos + 1;
 
         var key, val;
         if (pos === -1) {
@@ -80,20 +80,20 @@ var parseValues = function parseQueryStringValues(str, options) {
     return obj;
 };
 
-var parseObject = function (chain, val, options) {
-    var leaf = val;
+const parseObject = function (chain, val, options) {
+    let leaf = val;
 
-    for (var i = chain.length - 1; i >= 0; --i) {
+    for (let i = chain.length - 1; i >= 0; --i) {
         var obj;
-        var root = chain[i];
+        const root = chain[i];
 
         if (root === '[]') {
             obj = [];
             obj = obj.concat(leaf);
         } else {
             obj = options.plainObjects ? Object.create(null) : {};
-            var cleanRoot = root.charAt(0) === '[' && root.charAt(root.length - 1) === ']' ? root.slice(1, -1) : root;
-            var index = parseInt(cleanRoot, 10);
+            const cleanRoot = root.charAt(0) === '[' && root.charAt(root.length - 1) === ']' ? root.slice(1, -1) : root;
+            const index = parseInt(cleanRoot, 10);
             if (
                 !isNaN(index)
                 && root !== cleanRoot
@@ -114,27 +114,27 @@ var parseObject = function (chain, val, options) {
     return leaf;
 };
 
-var parseKeys = function parseQueryStringKeys(givenKey, val, options) {
+const parseKeys = function parseQueryStringKeys(givenKey, val, options) {
     if (!givenKey) {
         return;
     }
 
     // Transform dot notation to bracket notation
-    var key = options.allowDots ? givenKey.replace(/\.([^.[]+)/g, '[$1]') : givenKey;
+    let key = options.allowDots ? givenKey.replace(/\.([^.[]+)/g, '[$1]') : givenKey;
 
     // The regex chunks
 
-    var brackets = /(\[[^[\]]*])/;
-    var child = /(\[[^[\]]*])/g;
+    const brackets = /(\[[^[\]]*])/;
+    const child = /(\[[^[\]]*])/g;
 
     // Get the parent
 
-    var segment = brackets.exec(key);
-    var parent = segment ? key.slice(0, segment.index) : key;
+    let segment = brackets.exec(key);
+    const parent = segment ? key.slice(0, segment.index) : key;
 
     // Stash the parent if it exists
 
-    var keys = [];
+    let keys = [];
     if (parent) {
         // If we aren't using plain objects, optionally prefix keys
         // that would overwrite object prototype properties
@@ -149,7 +149,7 @@ var parseKeys = function parseQueryStringKeys(givenKey, val, options) {
 
     // Loop through children appending to the array until we hit depth
 
-    var i = 0;
+    let i = 0;
     while ((segment = child.exec(key)) !== null && i < options.depth) {
         i += 1;
         if (!options.plainObjects && has.call(Object.prototype, segment[1].slice(1, -1))) {
@@ -170,7 +170,7 @@ var parseKeys = function parseQueryStringKeys(givenKey, val, options) {
 };
 
 module.exports = function (str, opts) {
-    var options = opts ? utils.assign({}, opts) : {};
+    let options = opts ? utils.assign({}, opts) : {};
 
     if (options.decoder !== null && options.decoder !== undefined && typeof options.decoder !== 'function') {
         throw new TypeError('Decoder has to be a function.');
@@ -192,15 +192,15 @@ module.exports = function (str, opts) {
         return options.plainObjects ? Object.create(null) : {};
     }
 
-    var tempObj = typeof str === 'string' ? parseValues(str, options) : str;
-    var obj = options.plainObjects ? Object.create(null) : {};
+    const tempObj = typeof str === 'string' ? parseValues(str, options) : str;
+    let obj = options.plainObjects ? Object.create(null) : {};
 
     // Iterate over the keys and setup the new object
 
-    var keys = Object.keys(tempObj);
-    for (var i = 0; i < keys.length; ++i) {
-        var key = keys[i];
-        var newObj = parseKeys(key, tempObj[key], options);
+    let keys = Object.keys(tempObj);
+    for (let i = 0; i < keys.length; ++i) {
+        let key = keys[i];
+        const newObj = parseKeys(key, tempObj[key], options);
         obj = utils.merge(obj, newObj, options);
     }
 
@@ -210,10 +210,10 @@ module.exports = function (str, opts) {
 },{"./utils":5}],4:[function(require,module,exports){
 'use strict';
 
-var utils = require('./utils');
-var formats = require('./formats');
+const utils = require('./utils');
+const formats = require('./formats');
 
-var arrayPrefixGenerators = {
+const arrayPrefixGenerators = {
     brackets: function brackets(prefix) { // eslint-disable-line func-name-matching
         return prefix + '[]';
     },
@@ -225,9 +225,9 @@ var arrayPrefixGenerators = {
     }
 };
 
-var toISO = Date.prototype.toISOString;
+const toISO = Date.prototype.toISOString;
 
-var defaults = {
+const defaults = {
     delimiter: '&',
     encode: true,
     encoder: utils.encode,
@@ -239,7 +239,7 @@ var defaults = {
     strictNullHandling: false
 };
 
-var stringify = function stringify( // eslint-disable-line func-name-matching
+const stringify = function stringify( // eslint-disable-line func-name-matching
     object,
     prefix,
     generateArrayPrefix,
@@ -253,7 +253,7 @@ var stringify = function stringify( // eslint-disable-line func-name-matching
     formatter,
     encodeValuesOnly
 ) {
-    var obj = object;
+    let obj = object;
     if (typeof filter === 'function') {
         obj = filter(prefix, obj);
     } else if (obj instanceof Date) {
@@ -268,13 +268,13 @@ var stringify = function stringify( // eslint-disable-line func-name-matching
 
     if (typeof obj === 'string' || typeof obj === 'number' || typeof obj === 'boolean' || utils.isBuffer(obj)) {
         if (encoder) {
-            var keyValue = encodeValuesOnly ? prefix : encoder(prefix, defaults.encoder);
+            const keyValue = encodeValuesOnly ? prefix : encoder(prefix, defaults.encoder);
             return [formatter(keyValue) + '=' + formatter(encoder(obj, defaults.encoder))];
         }
         return [formatter(prefix) + '=' + formatter(String(obj))];
     }
 
-    var values = [];
+    let values = [];
 
     if (typeof obj === 'undefined') {
         return values;
@@ -284,12 +284,12 @@ var stringify = function stringify( // eslint-disable-line func-name-matching
     if (Array.isArray(filter)) {
         objKeys = filter;
     } else {
-        var keys = Object.keys(obj);
+        let keys = Object.keys(obj);
         objKeys = sort ? keys.sort(sort) : keys;
     }
 
-    for (var i = 0; i < objKeys.length; ++i) {
-        var key = objKeys[i];
+    for (let i = 0; i < objKeys.length; ++i) {
+        let key = objKeys[i];
 
         if (skipNulls && obj[key] === null) {
             continue;
@@ -332,28 +332,28 @@ var stringify = function stringify( // eslint-disable-line func-name-matching
 };
 
 module.exports = function (object, opts) {
-    var obj = object;
-    var options = opts ? utils.assign({}, opts) : {};
+    let obj = object;
+    const options = opts ? utils.assign({}, opts) : {};
 
     if (options.encoder !== null && options.encoder !== undefined && typeof options.encoder !== 'function') {
         throw new TypeError('Encoder has to be a function.');
     }
 
-    var delimiter = typeof options.delimiter === 'undefined' ? defaults.delimiter : options.delimiter;
-    var strictNullHandling = typeof options.strictNullHandling === 'boolean' ? options.strictNullHandling : defaults.strictNullHandling;
-    var skipNulls = typeof options.skipNulls === 'boolean' ? options.skipNulls : defaults.skipNulls;
-    var encode = typeof options.encode === 'boolean' ? options.encode : defaults.encode;
-    var encoder = typeof options.encoder === 'function' ? options.encoder : defaults.encoder;
-    var sort = typeof options.sort === 'function' ? options.sort : null;
-    var allowDots = typeof options.allowDots === 'undefined' ? false : options.allowDots;
-    var serializeDate = typeof options.serializeDate === 'function' ? options.serializeDate : defaults.serializeDate;
-    var encodeValuesOnly = typeof options.encodeValuesOnly === 'boolean' ? options.encodeValuesOnly : defaults.encodeValuesOnly;
+    const delimiter = typeof options.delimiter === 'undefined' ? defaults.delimiter : options.delimiter;
+    const strictNullHandling = typeof options.strictNullHandling === 'boolean' ? options.strictNullHandling : defaults.strictNullHandling;
+    const skipNulls = typeof options.skipNulls === 'boolean' ? options.skipNulls : defaults.skipNulls;
+    let encode = typeof options.encode === 'boolean' ? options.encode : defaults.encode;
+    const encoder = typeof options.encoder === 'function' ? options.encoder : defaults.encoder;
+    const sort = typeof options.sort === 'function' ? options.sort : null;
+    const allowDots = typeof options.allowDots === 'undefined' ? false : options.allowDots;
+    const serializeDate = typeof options.serializeDate === 'function' ? options.serializeDate : defaults.serializeDate;
+    const encodeValuesOnly = typeof options.encodeValuesOnly === 'boolean' ? options.encodeValuesOnly : defaults.encodeValuesOnly;
     if (typeof options.format === 'undefined') {
         options.format = formats['default'];
     } else if (!Object.prototype.hasOwnProperty.call(formats.formatters, options.format)) {
         throw new TypeError('Unknown format option provided.');
     }
-    var formatter = formats.formatters[options.format];
+    const formatter = formats.formatters[options.format];
     var objKeys;
     var filter;
 
@@ -365,7 +365,7 @@ module.exports = function (object, opts) {
         objKeys = filter;
     }
 
-    var keys = [];
+    let keys = [];
 
     if (typeof obj !== 'object' || obj === null) {
         return '';
@@ -380,7 +380,7 @@ module.exports = function (object, opts) {
         arrayFormat = 'indices';
     }
 
-    var generateArrayPrefix = arrayPrefixGenerators[arrayFormat];
+    const generateArrayPrefix = arrayPrefixGenerators[arrayFormat];
 
     if (!objKeys) {
         objKeys = Object.keys(obj);
@@ -390,8 +390,8 @@ module.exports = function (object, opts) {
         objKeys.sort(sort);
     }
 
-    for (var i = 0; i < objKeys.length; ++i) {
-        var key = objKeys[i];
+    for (let i = 0; i < objKeys.length; ++i) {
+        let key = objKeys[i];
 
         if (skipNulls && obj[key] === null) {
             continue;
@@ -413,8 +413,8 @@ module.exports = function (object, opts) {
         ));
     }
 
-    var joined = keys.join(delimiter);
-    var prefix = options.addQueryPrefix === true ? '?' : '';
+    const joined = keys.join(delimiter);
+    const prefix = options.addQueryPrefix === true ? '?' : '';
 
     return joined.length > 0 ? prefix + joined : '';
 };
@@ -422,28 +422,28 @@ module.exports = function (object, opts) {
 },{"./formats":1,"./utils":5}],5:[function(require,module,exports){
 'use strict';
 
-var has = Object.prototype.hasOwnProperty;
+const has = Object.prototype.hasOwnProperty;
 
-var hexTable = (function () {
-    var array = [];
-    for (var i = 0; i < 256; ++i) {
+const hexTable = (function () {
+    const array = [];
+    for (let i = 0; i < 256; ++i) {
         array.push('%' + ((i < 16 ? '0' : '') + i.toString(16)).toUpperCase());
     }
 
     return array;
 }());
 
-var compactQueue = function compactQueue(queue) {
+const compactQueue = function compactQueue(queue) {
     var obj;
 
     while (queue.length) {
-        var item = queue.pop();
+        let item = queue.pop();
         obj = item.obj[item.prop];
 
         if (Array.isArray(obj)) {
-            var compacted = [];
+            const compacted = [];
 
-            for (var j = 0; j < obj.length; ++j) {
+            for (let j = 0; j < obj.length; ++j) {
                 if (typeof obj[j] !== 'undefined') {
                     compacted.push(obj[j]);
                 }
@@ -456,9 +456,9 @@ var compactQueue = function compactQueue(queue) {
     return obj;
 };
 
-var arrayToObject = function arrayToObject(source, options) {
-    var obj = options && options.plainObjects ? Object.create(null) : {};
-    for (var i = 0; i < source.length; ++i) {
+const arrayToObject = function arrayToObject(source, options) {
+    let obj = options && options.plainObjects ? Object.create(null) : {};
+    for (let i = 0; i < source.length; ++i) {
         if (typeof source[i] !== 'undefined') {
             obj[i] = source[i];
         }
@@ -467,7 +467,7 @@ var arrayToObject = function arrayToObject(source, options) {
     return obj;
 };
 
-var merge = function merge(target, source, options) {
+const merge = function merge(target, source, options) {
     if (!source) {
         return target;
     }
@@ -490,7 +490,7 @@ var merge = function merge(target, source, options) {
         return [target].concat(source);
     }
 
-    var mergeTarget = target;
+    let mergeTarget = target;
     if (Array.isArray(target) && !Array.isArray(source)) {
         mergeTarget = arrayToObject(target, options);
     }
@@ -511,7 +511,7 @@ var merge = function merge(target, source, options) {
     }
 
     return Object.keys(source).reduce(function (acc, key) {
-        var value = source[key];
+        const value = source[key];
 
         if (has.call(acc, key)) {
             acc[key] = merge(acc[key], value, options);
@@ -522,14 +522,14 @@ var merge = function merge(target, source, options) {
     }, mergeTarget);
 };
 
-var assign = function assignSingleSource(target, source) {
+const assign = function assignSingleSource(target, source) {
     return Object.keys(source).reduce(function (acc, key) {
         acc[key] = source[key];
         return acc;
     }, target);
 };
 
-var decode = function (str) {
+const decode = function (str) {
     try {
         return decodeURIComponent(str.replace(/\+/g, ' '));
     } catch (e) {
@@ -537,18 +537,18 @@ var decode = function (str) {
     }
 };
 
-var encode = function encode(str) {
+const encode = function encode(str) {
     // This code was originally written by Brian White (mscdex) for the io.js core querystring library.
     // It has been adapted here for stricter adherence to RFC 3986
     if (str.length === 0) {
         return str;
     }
 
-    var string = typeof str === 'string' ? str : String(str);
+    const string = typeof str === 'string' ? str : String(str);
 
-    var out = '';
-    for (var i = 0; i < string.length; ++i) {
-        var c = string.charCodeAt(i);
+    let out = '';
+    for (let i = 0; i < string.length; ++i) {
+        let c = string.charCodeAt(i);
 
         if (
             c === 0x2D // -
@@ -589,18 +589,18 @@ var encode = function encode(str) {
     return out;
 };
 
-var compact = function compact(value) {
-    var queue = [{ obj: { o: value }, prop: 'o' }];
-    var refs = [];
+const compact = function compact(value) {
+    const queue = [{ obj: { o: value }, prop: 'o' }];
+    const refs = [];
 
-    for (var i = 0; i < queue.length; ++i) {
-        var item = queue[i];
-        var obj = item.obj[item.prop];
+    for (const i = 0; i < queue.length; ++i) {
+        const item = queue[i];
+        const obj = item.obj[item.prop];
 
-        var keys = Object.keys(obj);
-        for (var j = 0; j < keys.length; ++j) {
-            var key = keys[j];
-            var val = obj[key];
+        const keys = Object.keys(obj);
+        for (const j = 0; j < keys.length; ++j) {
+            const key = keys[j];
+            const val = obj[key];
             if (typeof val === 'object' && val !== null && refs.indexOf(val) === -1) {
                 queue.push({ obj: obj, prop: key });
                 refs.push(val);
@@ -611,11 +611,11 @@ var compact = function compact(value) {
     return compactQueue(queue);
 };
 
-var isRegExp = function isRegExp(obj) {
+const isRegExp = function isRegExp(obj) {
     return Object.prototype.toString.call(obj) === '[object RegExp]';
 };
 
-var isBuffer = function isBuffer(obj) {
+const isBuffer = function isBuffer(obj) {
     if (obj === null || typeof obj === 'undefined') {
         return false;
     }

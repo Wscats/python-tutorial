@@ -1,9 +1,11 @@
+'use strict';
+
 /**
  * @param {number[]} nums
  * @param {number} target
  * @return {number[]}
  */
-var twoSum = function (nums, target) {
+const twoSum = function (nums, target) {
     for (let a = 0; a < nums.length; a++) {
         console.log(a)
         for (let b = 0; b < a; b++) {

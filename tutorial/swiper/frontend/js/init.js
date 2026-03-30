@@ -1,3 +1,5 @@
+'use strict';
+
 axios.defaults.withCredentials = true;
 
 const request = axios.create({

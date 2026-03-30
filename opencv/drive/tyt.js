@@ -1,9 +1,11 @@
+'use strict';
+
 //建议选择启动安卓的PTP传输照片模式
 //不然可能造成照片读取上传下载出现问题
-var express = require('express');
-var child_process = require('child_process');
+const express = require('express');
+const child_process = require('child_process');
 //实例化第一个express的应用
-var app = express();
+const app = express();
 app.get('/screencap', function(req, res) {
 	res.append("Access-Control-Allow-Origin", "*");
 	// 触按屏幕时间
